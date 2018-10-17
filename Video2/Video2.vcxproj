@@ -84,17 +84,18 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <OutDir>$(ProjectDir)bin\</OutDir>
     <IntDir>$(ProjectDir)obj\</IntDir>
-    <IncludePath>C:\Alpha\Lib\RisLib\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\MyTools\include\SDL2;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
-      <AdditionalOptions>-pthread</AdditionalOptions>
-      <AdditionalIncludeDirectories>/home/linaro/Alpha/Lib/RisLib/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-pthread -D_REENTRANT</AdditionalOptions>
+      <AdditionalIncludeDirectories>/usr/include/SDL2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>~/Alpha/Lib/RisLib/lib/libRisLib.a;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <LibraryDependencies>pthread</LibraryDependencies>
+      <AdditionalOptions>-L/usr/lib/arm-linux-gnueabihf -lSDL2</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
