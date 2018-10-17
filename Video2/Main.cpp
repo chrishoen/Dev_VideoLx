@@ -1,5 +1,8 @@
 #include "stdafx.h"
 
+#include <iostream>
+#include <stdexcept>
+
 #include "SDL.h"
 
 //******************************************************************************
@@ -32,16 +35,25 @@ int main(int argc,char** argv)
    tRectA.w = tRectW;
    tRectA.h = tRectH;
 
+   try
+   {
+      putenv((char*)"FRAMEBUFFER=/dev/fb0");
+      putenv((char*)"SDL_FBDEV=/dev/fb0");
+      putenv((char*)"SDL_NOMOUSE=1");
+
       // Initialize SDL.
       tRet = SDL_Init(SDL_INIT_VIDEO);
+      if (tRet) throw std::runtime_error("SDL_Init");
 
       // Create window.
       tWindow = SDL_CreateWindow("Video2",
          SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
          tWindowH, tWindowH,0);
+      if(tWindow == 0) throw std::runtime_error("SDL_CreateWindow");
 
       // Create renderer.
       tRenderer = SDL_CreateRenderer(tWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+      if (tRenderer == 0) throw std::runtime_error("SDL_CreateRenderer");
 
       // Set renderer to the same size as the window.
       SDL_RenderSetLogicalSize(tRenderer, tWindowW, tWindowH);
@@ -65,6 +77,11 @@ int main(int argc,char** argv)
       printf("press enter\n");
       getchar();
 
+   }
+   catch (std::exception& e)
+   {
+      printf("main FAIL %s\n",e.what());
+   }
 
    // Done.
    if (tRenderer) SDL_DestroyRenderer(tRenderer);
