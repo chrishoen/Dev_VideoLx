@@ -32,6 +32,18 @@ void my_wait2()
    getchar();
 }
 
+void my_show_render_info(char* aLabel, SDL_RendererInfo* aInfo)
+{
+
+   char tString[100]="";
+   if (aInfo->flags & SDL_RENDERER_SOFTWARE)      strcat(tString, "software ");
+   if (aInfo->flags & SDL_RENDERER_ACCELERATED)   strcat(tString, "accelerated ");
+   if (aInfo->flags & SDL_RENDERER_PRESENTVSYNC)  strcat(tString, "presentvsync ");
+   if (aInfo->flags & SDL_RENDERER_TARGETTEXTURE) strcat(tString, "targettexture ");
+
+   printf("RenderInfo  %-16s %-10s %5X %s\n", aLabel, aInfo->name, aInfo->flags,tString);
+}
+
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
@@ -41,8 +53,30 @@ int main(int argc,char** argv)
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Initialize SDL.
+   // Local variables.
 
+   SDL_Window*      tWindow = 0;
+   SDL_Surface*     tSurface = 0;
+   SDL_Renderer*    tRenderer = 0;
+   SDL_Texture*     tBackground = 0;
+   SDL_Texture*     tShape = 0;
+   SDL_RendererInfo tRenderInfo;
+   SDL_Rect         tRectA;
+
+   int tWindowW = 640;
+   int tWindowH = 480;
+   int tRectW = 200;
+   int tRectH = 200;
+
+   tRectA.x = tWindowW / 2 - tRectW / 2;
+   tRectA.y = tWindowH / 2 - tRectH / 2;
+   tRectA.w = tRectW;
+   tRectA.h = tRectH;
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Initialize SDL.
 
    putenv((char*)"FRAMEBUFFER=/dev/fb0");
    putenv((char*)"SDL_FBDEV=/dev/fb0");
@@ -52,66 +86,64 @@ int main(int argc,char** argv)
    int tRet = SDL_Init(SDL_INIT_VIDEO);
    if (tRet) my_error("SDL_Init");
    
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Show SDL info.
+
    printf("\n\n");
    int tNumVideoDrivers = SDL_GetNumVideoDrivers();
-   printf("VideoDrivers       %d\n", tNumVideoDrivers);
+   printf("NumVideoDrivers        %1d\n", tNumVideoDrivers);
    for (int i=0;i<tNumVideoDrivers;i++)
    {
-      printf("VideoDriver          %s\n",SDL_GetVideoDriver(i));
+      printf("VideoDriver            %s\n",SDL_GetVideoDriver(i));
    }
 
    printf("\n\n");
    int tNumRenderDrivers = SDL_GetNumRenderDrivers();
-   printf("RenderDrivers       %d\n", tNumRenderDrivers);
+   printf("NumRenderDrivers       %1d\n", tNumRenderDrivers);
    for (int i=0;i<tNumRenderDrivers;i++)
    {
-      SDL_RendererInfo tInfo;      
-      SDL_GetRenderDriverInfo(i,&tInfo);
-      printf("\n");
-      printf("RenderDriver name    %d %s\n",i,tInfo.name);
-      printf("RenderDriver flags   %X\n",tInfo.flags);
-
-      printf("RenderDriver SDL_RENDERER_SOFTWARE      %d\n",tInfo.flags & SDL_RENDERER_SOFTWARE ? 1:0);
-      printf("RenderDriver SDL_RENDERER_ACCELERATED   %d\n",tInfo.flags & SDL_RENDERER_ACCELERATED ? 1:0);
-      printf("RenderDriver SDL_RENDERER_PRESENTVSYNC  %d\n",tInfo.flags & SDL_RENDERER_PRESENTVSYNC ? 1:0);
-      printf("RenderDriver SDL_RENDERER_TARGETTEXTURE %d\n",tInfo.flags & SDL_RENDERER_TARGETTEXTURE ? 1:0);
+      SDL_GetRenderDriverInfo(i,&tRenderInfo);
+      my_show_render_info("RenderDriver", &tRenderInfo);
    }
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Draw a window.
-
-   SDL_Window*   tWindow = 0;
-   SDL_Surface*  tSurface = 0;
-   SDL_Renderer* tRenderer = 0;
-   SDL_Texture*  tBackground = 0;
-   SDL_Texture*  tShape = 0;
-
-   SDL_Rect tRectA;
-
-   int tWindowW = 640;
-   int tWindowH = 480;
-   int tRectW   = 200;
-   int tRectH   = 200;
-
-   tRectA.x = tWindowW/2 - tRectW/2;
-   tRectA.y = tWindowH / 2 - tRectH/2;
-   tRectA.w = tRectW;
-   tRectA.h = tRectH;
-
    // Create window.
+
+   unsigned int tWindowFlags = 0;
+// tWindowFlags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+
    tWindow = SDL_CreateWindow("Video2",
       SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-      tWindowH, tWindowH,0);
+      tWindowH, tWindowH,tWindowFlags);
    if(tWindow == 0) my_error("SDL_CreateWindow");
 
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
    // Create renderer.
-   tRenderer = SDL_CreateRenderer(tWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+
+   int tRenderDriverIndex = -1;
+   unsigned int tRenderFlags = 0;
+   tRenderFlags |= SDL_RENDERER_ACCELERATED;
+   tRenderFlags |= SDL_RENDERER_PRESENTVSYNC;
+
+   tRenderer = SDL_CreateRenderer(tWindow, tRenderDriverIndex, tRenderFlags);
    if (tRenderer == 0) my_error("SDL_CreateRenderer");
 
    // Set renderer to the same size as the window.
    SDL_RenderSetLogicalSize(tRenderer, tWindowW, tWindowH);
+
+   SDL_GetRendererInfo(tRenderer, &tRenderInfo);
+   my_show_render_info("Renderer", &tRenderInfo);
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Draw the window.
 
    // Set renderer to blue.
    SDL_SetRenderDrawColor(tRenderer, 0, 0, 255, 255);
@@ -131,7 +163,11 @@ int main(int argc,char** argv)
    // Wait.
    my_wait1();
 
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
    // Done.
+
    if (tRenderer) SDL_DestroyRenderer(tRenderer);
    if (tWindow)   SDL_DestroyWindow(tWindow);
    SDL_Quit();
