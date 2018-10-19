@@ -56,6 +56,43 @@ void my_show_render_info(const char* aLabel, SDL_RendererInfo* aInfo)
    printf("RenderInfo  %-16s %-10s %5X %s\n", aLabel, aInfo->name, aInfo->flags,tString);
 }
 
+void my_show_display_info(int tDisplayIndex)
+{
+   SDL_DisplayMode  tDisplayMode;
+   int tRet = SDL_GetCurrentDisplayMode(0, &tDisplayMode);
+   if (tRet) my_error("SDL_GetCurrentDisplayMode");
+
+   printf("Display wh             %5d %5d\n", tDisplayMode.w, tDisplayMode.h);
+   printf("Display refresh rate   %5d\n", tDisplayMode.refresh_rate);
+}
+
+void my_show_gl_info()
+{
+   int tRet;
+   int tValue;
+   char tString[100] = "";
+
+   tRet = SDL_GL_GetAttribute(SDL_GL_DOUBLEBUFFER, &tValue);
+   if (tRet) my_error("SDL_GL_GetAttribute");
+
+   SDL_GL_GetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, &tValue);
+   if (tValue == SDL_GL_CONTEXT_PROFILE_ES) strcpy(tString, "GLES");
+   else                                     strcpy(tString, "NOT GLES");
+   printf("GL_CONTEXT_PROFILE_MASK      %5d %s\n", tValue,tString);
+
+   SDL_GL_GetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, &tValue);
+   printf("GL_CONTEXT_MAJOR_VERSION     %5d\n", tValue);
+
+   SDL_GL_GetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, &tValue);
+   printf("GL_CONTEXT_MINOR_VERSION     %5d\n", tValue);
+
+   SDL_GL_GetAttribute(SDL_GL_DOUBLEBUFFER, &tValue);
+   printf("GL_DOUBLEBUFFER              %5d\n", tValue);
+
+   SDL_GL_GetAttribute(SDL_GL_ACCELERATED_VISUAL, &tValue);
+   printf("GL_ACCELERATED_VISUAL        %5d\n", tValue);
+}
+
 //******************************************************************************
 //******************************************************************************
 //******************************************************************************
@@ -235,14 +272,24 @@ int main(int argc,char** argv)
       SDL_FreeSurface(tImage);
    }
    
-   printf("Wait***********************************************************\n");
-   // Wait.
-   my_wait2();
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Show info.
+
+   printf("\n");
+   printf("Info************************************************************\n");
+
+   my_show_display_info(0);
+   my_show_gl_info();
 
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Done.
+
+   printf("Wait***********************************************************\n");
+   my_wait2();
 
    if (tRenderer) SDL_DestroyRenderer(tRenderer);
    if (tWindow)   SDL_DestroyWindow(tWindow);
