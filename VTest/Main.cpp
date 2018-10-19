@@ -32,7 +32,19 @@ void my_wait2()
    getchar();
 }
 
-void my_show_render_info(char* aLabel, SDL_RendererInfo* aInfo)
+void my_show_window_flags(SDL_Window* aWindow)
+{
+   unsigned int tFlags = SDL_GetWindowFlags(aWindow);
+   char tString[100]="";
+   if (tFlags & SDL_WINDOW_SHOWN)      strcat(tString, "shown ");
+   if (tFlags & SDL_WINDOW_HIDDEN)     strcat(tString, "hidden ");
+   if (tFlags & SDL_WINDOW_FULLSCREEN) strcat(tString, "fullscreen ");
+   if (tFlags & SDL_WINDOW_OPENGL)     strcat(tString, "opengl ");
+
+   printf("WindowFlags %8X  %s\n", tFlags,tString);
+}
+
+void my_show_render_info(const char* aLabel, SDL_RendererInfo* aInfo)
 {
 
    char tString[100]="";
@@ -50,13 +62,19 @@ void my_show_render_info(char* aLabel, SDL_RendererInfo* aInfo)
 
 int main(int argc,char** argv)
 {
+   printf("VTEST**********************************************************\n");
+   printf("VTEST**********************************************************\n");
+   printf("VTEST**********************************************************\n");
+   
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Local variables.
 
+   int tRet;
    SDL_Window*      tWindow = 0;
    SDL_Surface*     tSurface = 0;
+   SDL_Surface*     tImage;
    SDL_Renderer*    tRenderer = 0;
    SDL_Texture*     tBackground = 0;
    SDL_Texture*     tShape = 0;
@@ -68,6 +86,9 @@ int main(int argc,char** argv)
    int tRectW = 200;
    int tRectH = 200;
 
+   tWindowW = 1920;
+   tWindowH = 1080;
+   
    tRectA.x = tWindowW / 2 - tRectW / 2;
    tRectA.y = tWindowH / 2 - tRectH / 2;
    tRectA.w = tRectW;
@@ -78,12 +99,15 @@ int main(int argc,char** argv)
    //***************************************************************************
    // Initialize SDL.
 
-   putenv((char*)"FRAMEBUFFER=/dev/fb0");
-   putenv((char*)"SDL_FBDEV=/dev/fb0");
+// putenv((char*)"FRAMEBUFFER=/dev/fb0");
+// putenv((char*)"SDL_FBDEV=/dev/fb0");
+// putenv((char*)"SDL_VIDEODRIVER=kmsdrm");
    putenv((char*)"SDL_NOMOUSE=1");
    putenv((char*)"DISPLAY=:0");
    
-   int tRet = SDL_Init(SDL_INIT_VIDEO);
+   printf("\n");
+   printf("SDL_Init*******************************************************\n");
+   tRet = SDL_Init(SDL_INIT_VIDEO);
    if (tRet) my_error("SDL_Init");
    
    //***************************************************************************
@@ -91,7 +115,8 @@ int main(int argc,char** argv)
    //***************************************************************************
    // Show SDL info.
 
-   printf("\n\n");
+   printf("\n");
+   printf("VideoDrivers***************************************************\n");
    int tNumVideoDrivers = SDL_GetNumVideoDrivers();
    printf("NumVideoDrivers        %1d\n", tNumVideoDrivers);
    for (int i=0;i<tNumVideoDrivers;i++)
@@ -99,7 +124,13 @@ int main(int argc,char** argv)
       printf("VideoDriver            %s\n",SDL_GetVideoDriver(i));
    }
 
-   printf("\n\n");
+   printf("\n");
+   printf("VideoDisplays***************************************************\n");
+   int tNumVideoDisplays = SDL_GetNumVideoDisplays();
+   printf("NumVideoDisplays       %1d\n", tNumVideoDisplays);
+
+   printf("\n");
+   printf("RendererDrivers************************************************\n");
    int tNumRenderDrivers = SDL_GetNumRenderDrivers();
    printf("NumRenderDrivers       %1d\n", tNumRenderDrivers);
    for (int i=0;i<tNumRenderDrivers;i++)
@@ -113,55 +144,98 @@ int main(int argc,char** argv)
    //***************************************************************************
    // Create window.
 
+   printf("\n");
+   printf("CreateWindow***************************************************\n");
    unsigned int tWindowFlags = 0;
-// tWindowFlags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+   tWindowFlags |= SDL_WINDOW_SHOWN;
+   tWindowFlags |= SDL_WINDOW_FULLSCREEN;
+   tWindowFlags |= SDL_WINDOW_OPENGL;
 
-   tWindow = SDL_CreateWindow("Video2",
+   tWindow = SDL_CreateWindow("TVideo",
       SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-      tWindowH, tWindowH,tWindowFlags);
+      tWindowW, tWindowH,tWindowFlags);
    if(tWindow == 0) my_error("SDL_CreateWindow");
 
+   my_show_window_flags(tWindow);
+   
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Create renderer.
 
-   int tRenderDriverIndex = -1;
-   unsigned int tRenderFlags = 0;
-   tRenderFlags |= SDL_RENDERER_ACCELERATED;
-   tRenderFlags |= SDL_RENDERER_PRESENTVSYNC;
+   if (true)
+   {
+      printf("CreateRenderer*************************************************\n");
+      int tRenderDriverIndex = -1;
+      tRenderDriverIndex = 0;
+      unsigned int tRenderFlags = 0;
+      tRenderFlags |= SDL_RENDERER_ACCELERATED;
+      tRenderFlags |= SDL_RENDERER_PRESENTVSYNC;
 
-   tRenderer = SDL_CreateRenderer(tWindow, tRenderDriverIndex, tRenderFlags);
-   if (tRenderer == 0) my_error("SDL_CreateRenderer");
+      tRenderer = SDL_CreateRenderer(tWindow, tRenderDriverIndex, tRenderFlags);
+      if (tRenderer == 0) my_error("SDL_CreateRenderer");
 
-   // Set renderer to the same size as the window.
-   SDL_RenderSetLogicalSize(tRenderer, tWindowW, tWindowH);
+      // Set renderer to the same size as the window.
+      SDL_RenderSetLogicalSize(tRenderer, tWindowW, tWindowH);
 
-   SDL_GetRendererInfo(tRenderer, &tRenderInfo);
-   my_show_render_info("Renderer", &tRenderInfo);
-
+      SDL_GetRendererInfo(tRenderer, &tRenderInfo);
+      my_show_render_info("Renderer", &tRenderInfo);
+   }
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Draw the window.
 
-   // Set renderer to blue.
-   SDL_SetRenderDrawColor(tRenderer, 0, 0, 255, 255);
+   if (true)
+   {
+      printf("DrawWindow*****************************************************\n");
+      
+      // Set renderer to blue.
+      SDL_SetRenderDrawColor(tRenderer, 0, 0, 255, 255);
 
-   // Clear the window and make it all blue.
-   SDL_RenderClear(tRenderer);
+      // Clear the window and make it all blue.
+      SDL_RenderClear(tRenderer);
 
-   // Set renderer to red.
-   SDL_SetRenderDrawColor(tRenderer, 255, 0, 0, 255);
+      // Set renderer to red.
+      SDL_SetRenderDrawColor(tRenderer, 255, 0, 0, 255);
 
-   // Render the rectangle.
-   SDL_RenderFillRect(tRenderer, &tRectA);
+      // Render the rectangle.
+      SDL_RenderFillRect(tRenderer, &tRectA);
 
-   // Render the changes above.
-   SDL_RenderPresent(tRenderer);
+      // Render the changes above.
+      SDL_RenderPresent(tRenderer);
 
+      my_show_window_flags(tWindow);
+   }
+   
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Draw the window.
+
+   if (false)
+   {
+      printf("DrawWindow*****************************************************\n");
+      
+      tSurface = SDL_GetWindowSurface(tWindow);
+      if (tSurface == 0) my_error("SDL_GetWindowSurface");
+
+      tImage = SDL_LoadBMP("sails.bmp");
+      if (tImage == 0) my_error("SDL_LoadBMP");
+
+      tRet = SDL_BlitSurface(tImage, NULL, tSurface, NULL);
+      if(tRet) my_error("SDL_BlitSurface");
+
+      tRet = SDL_UpdateWindowSurface(tWindow);
+      if(tRet) my_error("SDL_UpdateWindowSurface");
+      my_show_window_flags(tWindow);
+  
+      SDL_FreeSurface(tImage);
+   }
+   
+   printf("Wait***********************************************************\n");
    // Wait.
-   my_wait1();
+   my_wait2();
 
    //***************************************************************************
    //***************************************************************************
