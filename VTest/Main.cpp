@@ -72,6 +72,7 @@ int main(int argc,char** argv)
    // Local variables.
 
    int tRet;
+   int tRunCode = 2;
    SDL_Window*      tWindow = 0;
    SDL_Surface*     tSurface = 0;
    SDL_Surface*     tImage;
@@ -163,7 +164,7 @@ int main(int argc,char** argv)
    //***************************************************************************
    // Create renderer.
 
-   if (true)
+   if (tRunCode==1)
    {
       printf("CreateRenderer*************************************************\n");
       int tRenderDriverIndex = -1;
@@ -181,12 +182,13 @@ int main(int argc,char** argv)
       SDL_GetRendererInfo(tRenderer, &tRenderInfo);
       my_show_render_info("Renderer", &tRenderInfo);
    }
+
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Draw the window.
 
-   if (true)
+   if (tRunCode == 1)
    {
       printf("DrawWindow*****************************************************\n");
       
@@ -213,14 +215,14 @@ int main(int argc,char** argv)
    //***************************************************************************
    // Draw the window.
 
-   if (false)
+   if (tRunCode == 2)
    {
       printf("DrawWindow*****************************************************\n");
       
       tSurface = SDL_GetWindowSurface(tWindow);
       if (tSurface == 0) my_error("SDL_GetWindowSurface");
 
-      tImage = SDL_LoadBMP("sails.bmp");
+      tImage = SDL_LoadBMP("/home/linaro/Alpha/Image/sails.bmp");
       if (tImage == 0) my_error("SDL_LoadBMP");
 
       tRet = SDL_BlitSurface(tImage, NULL, tSurface, NULL);
