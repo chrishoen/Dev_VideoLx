@@ -1,6 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
+#include "stdafx.h"
 
 #include "SDL.h"
 
@@ -59,11 +57,11 @@ void my_show_render_info(const char* aLabel, SDL_RendererInfo* aInfo)
 void my_show_display_info(int tDisplayIndex)
 {
    SDL_DisplayMode  tDisplayMode;
-   int tRet = SDL_GetCurrentDisplayMode(0, &tDisplayMode);
+   int tRet = SDL_GetCurrentDisplayMode(tDisplayIndex, &tDisplayMode);
    if (tRet) my_error("SDL_GetCurrentDisplayMode");
 
-   printf("Display wh             %5d %5d\n", tDisplayMode.w, tDisplayMode.h);
-   printf("Display refresh rate   %5d\n", tDisplayMode.refresh_rate);
+   printf("Display                %5d %5d %5d\n",
+      tDisplayMode.w, tDisplayMode.h, tDisplayMode.refresh_rate);
 }
 
 void my_show_gl_info()
@@ -73,7 +71,15 @@ void my_show_gl_info()
    char tString[100] = "";
 
    tRet = SDL_GL_GetAttribute(SDL_GL_DOUBLEBUFFER, &tValue);
-   if (tRet) my_error("SDL_GL_GetAttribute");
+   if (tRet)
+   {
+      printf("GL PRESENT\n");
+   }
+   else
+   {
+      printf("GL NOT PRESENT\n");
+      return;
+   }
 
    SDL_GL_GetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, &tValue);
    if (tValue == SDL_GL_CONTEXT_PROFILE_ES) strcpy(tString, "GLES");
@@ -99,17 +105,17 @@ void my_show_gl_info()
 
 int main(int argc,char** argv)
 {
-   printf("VTEST**********************************************************\n");
-   printf("VTEST**********************************************************\n");
-   printf("VTEST**********************************************************\n");
-   
+   printf("VIDEO1*********************************************************\n");
+   printf("VIDEO1*********************************************************\n");
+   printf("VIDEO1*********************************************************\n");
+
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
    // Local variables.
 
    int tRet;
-   int tRunCode = 2;
+   int tRunCode = 1;
    SDL_Window*      tWindow = 0;
    SDL_Surface*     tSurface = 0;
    SDL_Surface*     tImage;
@@ -124,9 +130,11 @@ int main(int argc,char** argv)
    int tRectW = 200;
    int tRectH = 200;
 
+   tWindowW = 640;
+   tWindowH = 480;
    tWindowW = 1920;
    tWindowH = 1080;
-   
+
    tRectA.x = tWindowW / 2 - tRectW / 2;
    tRectA.y = tWindowH / 2 - tRectH / 2;
    tRectA.w = tRectW;
@@ -167,6 +175,14 @@ int main(int argc,char** argv)
    int tNumVideoDisplays = SDL_GetNumVideoDisplays();
    printf("NumVideoDisplays       %1d\n", tNumVideoDisplays);
 
+   for (int i = 0; i < tNumVideoDisplays; i++)
+   {
+      my_show_display_info(i);
+   }
+
+   printf("GL info*********************************************************\n");
+   my_show_gl_info();
+
    printf("\n");
    printf("RendererDrivers************************************************\n");
    int tNumRenderDrivers = SDL_GetNumRenderDrivers();
@@ -191,6 +207,7 @@ int main(int argc,char** argv)
 
    tWindow = SDL_CreateWindow("TVideo",
       SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+//    SDL_WINDOWPOS_CENTERED_DISPLAY(1), SDL_WINDOWPOS_CENTERED_DISPLAY(1),
       tWindowW, tWindowH,tWindowFlags);
    if(tWindow == 0) my_error("SDL_CreateWindow");
 
@@ -218,15 +235,7 @@ int main(int argc,char** argv)
 
       SDL_GetRendererInfo(tRenderer, &tRenderInfo);
       my_show_render_info("Renderer", &tRenderInfo);
-   }
 
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
-   // Draw the window.
-
-   if (tRunCode == 1)
-   {
       printf("DrawWindow*****************************************************\n");
       
       // Set renderer to blue.
@@ -259,6 +268,7 @@ int main(int argc,char** argv)
       tSurface = SDL_GetWindowSurface(tWindow);
       if (tSurface == 0) my_error("SDL_GetWindowSurface");
 
+//    tImage = SDL_LoadBMP("C:/Alpha/Image/sails.bmp");
       tImage = SDL_LoadBMP("/home/linaro/Alpha/Image/sails.bmp");
       if (tImage == 0) my_error("SDL_LoadBMP");
 
@@ -275,21 +285,10 @@ int main(int argc,char** argv)
    //***************************************************************************
    //***************************************************************************
    //***************************************************************************
-   // Show info.
-
-   printf("\n");
-   printf("Info************************************************************\n");
-
-   my_show_display_info(0);
-   my_show_gl_info();
-
-   //***************************************************************************
-   //***************************************************************************
-   //***************************************************************************
    // Done.
 
    printf("Wait***********************************************************\n");
-   my_wait2();
+   my_wait1();
 
    if (tRenderer) SDL_DestroyRenderer(tRenderer);
    if (tWindow)   SDL_DestroyWindow(tWindow);

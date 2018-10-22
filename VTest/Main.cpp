@@ -109,7 +109,7 @@ int main(int argc,char** argv)
    // Local variables.
 
    int tRet;
-   int tRunCode = 2;
+   int tRunCode = 1;
    SDL_Window*      tWindow = 0;
    SDL_Surface*     tSurface = 0;
    SDL_Surface*     tImage;
