@@ -92,13 +92,13 @@ void VideoThread::doVideoStart()
       tWindowFlags |= SDL_WINDOW_FULLSCREEN;
       tWindowFlags |= SDL_WINDOW_OPENGL;
 
+      mDisplay = 1;
       mWindow = SDL_CreateWindow("VideoThread",
-         SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-       //SDL_WINDOWPOS_CENTERED_DISPLAY(1), SDL_WINDOWPOS_CENTERED_DISPLAY(1),
+         SDL_WINDOWPOS_CENTERED_DISPLAY(mDisplay), SDL_WINDOWPOS_CENTERED_DISPLAY(mDisplay),
          mWindowW, mWindowH, tWindowFlags);
       if (mWindow == 0) throw "SDL_CreateWindow";
 
-      showWindowFlags(mWindow);
+      showWindowInfo(mWindow);
 
       //************************************************************************
       //************************************************************************
@@ -120,8 +120,7 @@ void VideoThread::doVideoStart()
       SDL_RenderSetLogicalSize(mRenderer, mWindowW, mWindowH);
 
       // Show.
-      SDL_GetRendererInfo(mRenderer, &mRenderInfo);
-      showRenderInfo("Renderer", &mRenderInfo);
+      showRendererInfo(mRenderer);
 
       //************************************************************************
       //************************************************************************
@@ -138,9 +137,6 @@ void VideoThread::doVideoStart()
 
       // Render the changes above.
       SDL_RenderPresent(mRenderer);
-
-      // Show.
-      showWindowFlags(mWindow);
    }
    catch (const char* aString)
    {

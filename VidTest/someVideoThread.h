@@ -45,6 +45,7 @@ public:
    bool mValidFlag;
 
    // SDL window resources.
+   int              mDisplay;
    SDL_Window*      mWindow;
    SDL_Surface*     mSurface;
    SDL_Surface*     mImage;
@@ -132,8 +133,9 @@ public:
    // Methods.
 
    // Utilities.
-   void showWindowFlags(SDL_Window* aWindow);
+   void showWindowInfo(SDL_Window* aWindow);
    void showRenderInfo(const char* aLabel, SDL_RendererInfo* aInfo);
+   void showRendererInfo(SDL_Renderer* aRenderer);
    void showDisplayInfo(int tDisplayIndex);
    void showGLInfo();
    void showError();

@@ -18,16 +18,19 @@ namespace Some
 //******************************************************************************
 //******************************************************************************
 
-void VideoThread::showWindowFlags(SDL_Window* aWindow)
+void VideoThread::showWindowInfo(SDL_Window* aWindow)
 {
    unsigned int tFlags = SDL_GetWindowFlags(aWindow);
+   int tWidth, tHeight;
+   SDL_GetWindowSize(aWindow, &tWidth, &tHeight);
+
    char tString[100] = "";
    if (tFlags & SDL_WINDOW_SHOWN)      strcat(tString, "shown ");
    if (tFlags & SDL_WINDOW_HIDDEN)     strcat(tString, "hidden ");
    if (tFlags & SDL_WINDOW_FULLSCREEN) strcat(tString, "fullscreen ");
    if (tFlags & SDL_WINDOW_OPENGL)     strcat(tString, "opengl ");
 
-   Prn::print(Prn::ThreadRun1,"WindowFlags     %8X  %s", tFlags, tString);
+   Prn::print(Prn::ThreadRun1,"WindowFlags     %8X  %s  %4d %4d", tFlags, tString,tWidth,tHeight);
 }
 
 void VideoThread::showRenderInfo(const char* aLabel, SDL_RendererInfo* aInfo)
@@ -42,10 +45,28 @@ void VideoThread::showRenderInfo(const char* aLabel, SDL_RendererInfo* aInfo)
    Prn::print(Prn::ThreadRun1, "RenderInfo  %-16s %-10s %5X %s", aLabel, aInfo->name, aInfo->flags, tString);
 }
 
+void VideoThread::showRendererInfo(SDL_Renderer* aRenderer)
+{
+   SDL_RendererInfo tInfo;
+   SDL_GetRendererInfo(aRenderer, &tInfo);
+   int tWidth, tHeight;
+   SDL_GetRendererOutputSize(aRenderer, &tWidth,&tHeight);
+
+   char tString[100] = "";
+   if (tInfo.flags & SDL_RENDERER_SOFTWARE)      strcat(tString, "software ");
+   if (tInfo.flags & SDL_RENDERER_ACCELERATED)   strcat(tString, "accelerated ");
+   if (tInfo.flags & SDL_RENDERER_PRESENTVSYNC)  strcat(tString, "presentvsync ");
+   if (tInfo.flags & SDL_RENDERER_TARGETTEXTURE) strcat(tString, "targettexture ");
+
+   Prn::print(Prn::ThreadRun1, "Renderer Info  %-10s %5X %s", tInfo.name, tInfo.flags, tString);
+   Prn::print(Prn::ThreadRun1, "Renderer MaxSize  %4d %4d", tInfo.max_texture_width, tInfo.max_texture_height);
+   Prn::print(Prn::ThreadRun1, "Renderer OutSize  %4d %4d", tWidth,tHeight);
+}
+
 void VideoThread::showDisplayInfo(int tDisplayIndex)
 {
    SDL_DisplayMode  tDisplayMode;
-   int tRet = SDL_GetCurrentDisplayMode(0, &tDisplayMode);
+   int tRet = SDL_GetCurrentDisplayMode(tDisplayIndex, &tDisplayMode);
    if (tRet) throw "SDL_GetCurrentDisplayMode";
 
    Prn::print(Prn::ThreadRun1, "Display                %4d %4d %4d",

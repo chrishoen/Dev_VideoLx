@@ -25,6 +25,7 @@ VideoThread::VideoThread()
    // Set member variables.
    mValidFlag = false;
 
+   mDisplay = 0;
    mWindow = 0;
    mSurface = 0;
    mImage;
@@ -32,8 +33,6 @@ VideoThread::VideoThread()
    mBackground = 0;
    mTexture = 0;
 
-   mWindowW = 640;
-   mWindowH = 480;
    mWindowW = gVideoParms.mWindowWidth;
    mWindowH = gVideoParms.mWindowHeight;
    mRectH = 200;
