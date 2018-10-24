@@ -30,7 +30,7 @@ VideoThread::VideoThread()
    mImage;
    mRenderer = 0;
    mBackground = 0;
-   mShape = 0;
+   mTexture = 0;
 
    mWindowW = 640;
    mWindowH = 480;

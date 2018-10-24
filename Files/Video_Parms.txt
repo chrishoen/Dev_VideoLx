@@ -9,18 +9,21 @@ SectionBegin Default
    //*****************************************************************
    
    // Window width and height.
-   WindowHeightWidth      1920   1080
+   WindowWidthHeight      1920   1080
 
    // Window colors. RGB,I
    ForeColor              255     0      0      255        
-   BackColor              255     255    255    255
+   BackColor              0       0      255    255
+   foreColor              255     255    255    255
+   BackColor              0       0      0      255
 
    // Image.
-   ImageFilename          Image1920.png
+   ImageFilename0         Image1920_0.png
+   ImageFilename1         Image1920_1.png
    
    // Target test variables.
-   SizeX                  80
-   SizeY                  60
+   SideX                  80
+   SideY                  60
 
    // Timer thread.
    TimerThreadPeriod      100

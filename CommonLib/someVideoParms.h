@@ -87,7 +87,8 @@ public:
    // Members.
 
    // Image file name.
-   char mImageFilename[cMaxStringSize];
+   char mImageFilename0[cMaxStringSize];
+   char mImageFilename1[cMaxStringSize];
 
    // Side variables.
    int mSideX;

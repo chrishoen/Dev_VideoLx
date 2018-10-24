@@ -50,7 +50,7 @@ public:
    SDL_Surface*     mImage;
    SDL_Renderer*    mRenderer;
    SDL_Texture*     mBackground;
-   SDL_Texture*     mShape;
+   SDL_Texture*     mTexture;
    SDL_RendererInfo mRenderInfo;
    SDL_Rect         mRectA;
    SDL_Rect         mRectB;

@@ -9,6 +9,7 @@
 
 #include "SDL.h"
 #include "SDL_image.h"
+#include "risAlphaDir.h"
 
 #include "someVideoParms.h"
 #include "someVideoThread.h"
@@ -157,8 +158,10 @@ void VideoThread::doVideoFinish()
 {
    Prn::print(Prn::ThreadRun1, "VideoThread::doVideoFinish");
 
+   if (mTexture)   SDL_DestroyTexture(mTexture);
    if (mRenderer) SDL_DestroyRenderer(mRenderer);
    if (mWindow)   SDL_DestroyWindow(mWindow);
+   mTexture = 0;
    mRenderer = 0;
    mWindow = 0;
 }
@@ -217,35 +220,42 @@ void VideoThread::doVideoDraw1(SDL_Event* aEvent)
 void VideoThread::doVideoDraw2(SDL_Event* aEvent)
 {
    int tRet = 0;
-   int aCode = aEvent->user.code;
-   Prn::print(Prn::ThreadRun2, "VideoThread::doVideoDraw1 %d", aCode);
+   int tCode = aEvent->user.code;
 
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Image file name.
+
+   char tFilename[200];
+   char tBuffer[100];
+   if (tCode == 0)
+   {
+      strcpy(tFilename, Ris::getAlphaFilePath_Image(tBuffer, gVideoParms.mImageFilename0));
+   }
+   else
+   {
+      strcpy(tFilename, Ris::getAlphaFilePath_Image(tBuffer, gVideoParms.mImageFilename1));
+   }
+   Prn::print(Prn::ThreadRun1, "doVideoDraw2 %s", tFilename);
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Draw the image.
    try
    {
-      //************************************************************************
-      //************************************************************************
-      //************************************************************************
-      // Draw the window.
+      // Load the texture from the png file.
+      mTexture = IMG_LoadTexture(mRenderer, tFilename);
+      if (!mTexture) throw "IMG_LoadTexture";
 
-      // Set renderer to blue.
-      tRet = SDL_SetRenderDrawColor(mRenderer, 0, 0, 255, 255);
-      if (tRet) throw "SDL_SetRenderDrawColor";
+      int tWidth, tHeight;
+      SDL_QueryTexture(mTexture, NULL, NULL, &tWidth, &tHeight);
+      Prn::print(Prn::ThreadRun1, "LoadTexture %4d %4d", tWidth,tHeight);
 
-      // Clear the window and make it all blue.
-      tRet = SDL_RenderClear(mRenderer);
-      if (tRet) throw "SDL_RenderClear";
 
-      // Set renderer to red.
-      tRet = SDL_SetRenderDrawColor(mRenderer, 255, 0, 0, 255);
-      if (tRet) throw "SDL_SetRenderDrawColor";
-
-      // Render the rectangle.
-      SDL_Rect tRect = mRectA;
-      if (aCode == 0) tRect = mRectA;
-      if (aCode == 1) tRect = mRectB;
-      SDL_RenderFillRect(mRenderer, &tRect);
-
-      // Render the changes above.
+      // Render the texture.
+      SDL_RenderCopy(mRenderer, mTexture, NULL, NULL);
       SDL_RenderPresent(mRenderer);
    }
    catch (const char* aString)
@@ -253,6 +263,8 @@ void VideoThread::doVideoDraw2(SDL_Event* aEvent)
       Prn::print(Prn::ThreadRun1, "EXCEPTION %s", aString, SDL_GetError());
       mValidFlag = false;
    }
+
+
 }
 
 //******************************************************************************
