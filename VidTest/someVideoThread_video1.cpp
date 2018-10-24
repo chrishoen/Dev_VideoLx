@@ -8,7 +8,9 @@
 
 
 #include "SDL.h"
+#include "SDL_image.h"
 
+#include "someVideoParms.h"
 #include "someVideoThread.h"
 
 namespace Some
@@ -25,6 +27,21 @@ void VideoThread::doVideoStart()
 
    try
    {
+      //************************************************************************
+      //************************************************************************
+      //************************************************************************
+      // Copy variables.
+
+      mForeColor[0] = gVideoParms.mForeColor[0];
+      mForeColor[1] = gVideoParms.mForeColor[1];
+      mForeColor[2] = gVideoParms.mForeColor[2];
+      mForeColor[3] = gVideoParms.mForeColor[3];
+
+      mBackColor[0] = gVideoParms.mBackColor[0];
+      mBackColor[1] = gVideoParms.mBackColor[1];
+      mBackColor[2] = gVideoParms.mBackColor[2];
+      mBackColor[3] = gVideoParms.mBackColor[3];
+
       //************************************************************************
       //************************************************************************
       //************************************************************************
@@ -113,7 +130,7 @@ void VideoThread::doVideoStart()
       Prn::print(Prn::ThreadRun1, "DrawWindow*****************************************************");
 
       // Set renderer to blue.
-      SDL_SetRenderDrawColor(mRenderer, 0, 0, 255, 255);
+      SDL_SetRenderDrawColor(mRenderer, mBackColor[0], mBackColor[1], mBackColor[2], mBackColor[3]);
 
       // Clear the window and make it all blue.
       SDL_RenderClear(mRenderer);
@@ -165,7 +182,7 @@ void VideoThread::doVideoDraw1(SDL_Event* aEvent)
       // Draw the window.
 
       // Set renderer to blue.
-      tRet = SDL_SetRenderDrawColor(mRenderer, 0, 0, 255, 255);
+      tRet = SDL_SetRenderDrawColor(mRenderer, mBackColor[0], mBackColor[1], mBackColor[2], mBackColor[3]);
       if (tRet) throw "SDL_SetRenderDrawColor";
 
       // Clear the window and make it all blue.
@@ -173,7 +190,7 @@ void VideoThread::doVideoDraw1(SDL_Event* aEvent)
       if (tRet) throw "SDL_RenderClear";
 
       // Set renderer to red.
-      tRet = SDL_SetRenderDrawColor(mRenderer, 255, 0, 0, 255);
+      tRet = SDL_SetRenderDrawColor(mRenderer, mForeColor[0], mForeColor[1], mForeColor[2], mForeColor[3]);
       if (tRet) throw "SDL_SetRenderDrawColor";
 
       // Render the rectangle.

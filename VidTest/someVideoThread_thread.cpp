@@ -39,6 +39,16 @@ VideoThread::VideoThread()
    mRectH = 200;
    mRectW = 200;
 
+   mForeColor[0] = 0;
+   mForeColor[1] = 0;
+   mForeColor[2] = 0;
+   mForeColor[3] = 0;
+
+   mBackColor[0] = 0;
+   mBackColor[1] = 0;
+   mBackColor[2] = 0;
+   mBackColor[3] = 0;
+
    mRectA.x = mWindowW/4 - mRectW/2;
    mRectA.y = mWindowH/2 - mRectH/2;
    mRectA.w = mRectW;

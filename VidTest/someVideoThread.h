@@ -61,6 +61,10 @@ public:
    int mRectW;
    int mRectH;
 
+   // Window colors.
+   int mForeColor[4];
+   int mBackColor[4];
+
    // Thread window specific event types.
    unsigned int mDraw1EventType;
    unsigned int mDraw2EventType;
