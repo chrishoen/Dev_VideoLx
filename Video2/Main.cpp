@@ -244,7 +244,7 @@ int main(int argc,char** argv)
 
 // tImage = SDL_LoadBMP("/home/linaro/Alpha/Image/Image1.bmp");
 // if (tImage == 0) my_error("SDL_LoadBMP");
-   tImage = IMG_Load("/home/linaro/Alpha/Image/Image1.png");
+   tImage = IMG_Load("/home/linaro/Alpha/Image/Image1920.png");
    if (tImage == 0) my_error("IMG_Load");
 
    tRet = SDL_BlitSurface(tImage, NULL, tSurface, NULL);

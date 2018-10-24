@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="CmdLineExec.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MainInit.cpp" />
+    <ClCompile Include="someTimerThread.cpp" />
+    <ClCompile Include="someVideoThread_thread.cpp" />
+    <ClCompile Include="someVideoThread_utils.cpp" />
+    <ClCompile Include="someVideoThread_video1.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="CmdLineExec.h" />
+    <ClInclude Include="MainInit.h" />
+    <ClInclude Include="someTimerThread.h" />
+    <ClInclude Include="someVideoThread.h" />
+  </ItemGroup>
+</Project>

@@ -15,6 +15,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VThread1", "VThread1\VThrea
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Video2", "Video2\Video2.vcxproj", "{77BCBDC0-3213-4133-9158-72E16B846F8C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VidTest", "VidTest\VidTest.vcxproj", "{E3D47A06-8C8B-43C6-B70A-3C95D765A371}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -120,6 +122,19 @@ Global
 		{77BCBDC0-3213-4133-9158-72E16B846F8C}.Release|x64.Build.0 = Release|x64
 		{77BCBDC0-3213-4133-9158-72E16B846F8C}.Release|x86.ActiveCfg = Release|x86
 		{77BCBDC0-3213-4133-9158-72E16B846F8C}.Release|x86.Build.0 = Release|x86
+		{E3D47A06-8C8B-43C6-B70A-3C95D765A371}.Debug|ARM.ActiveCfg = Release|ARM
+		{E3D47A06-8C8B-43C6-B70A-3C95D765A371}.Debug|ARM.Build.0 = Release|ARM
+		{E3D47A06-8C8B-43C6-B70A-3C95D765A371}.Debug|ARM64.ActiveCfg = Release|ARM
+		{E3D47A06-8C8B-43C6-B70A-3C95D765A371}.Debug|ARM64.Build.0 = Release|ARM
+		{E3D47A06-8C8B-43C6-B70A-3C95D765A371}.Debug|x64.ActiveCfg = Release|ARM
+		{E3D47A06-8C8B-43C6-B70A-3C95D765A371}.Debug|x64.Build.0 = Release|ARM
+		{E3D47A06-8C8B-43C6-B70A-3C95D765A371}.Debug|x86.ActiveCfg = Release|ARM
+		{E3D47A06-8C8B-43C6-B70A-3C95D765A371}.Debug|x86.Build.0 = Release|ARM
+		{E3D47A06-8C8B-43C6-B70A-3C95D765A371}.Release|ARM.ActiveCfg = Release|ARM
+		{E3D47A06-8C8B-43C6-B70A-3C95D765A371}.Release|ARM.Build.0 = Release|ARM
+		{E3D47A06-8C8B-43C6-B70A-3C95D765A371}.Release|ARM64.ActiveCfg = Release|ARM
+		{E3D47A06-8C8B-43C6-B70A-3C95D765A371}.Release|x64.ActiveCfg = Release|ARM
+		{E3D47A06-8C8B-43C6-B70A-3C95D765A371}.Release|x86.ActiveCfg = Release|ARM
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
