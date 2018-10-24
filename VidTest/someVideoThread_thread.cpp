@@ -8,6 +8,7 @@
 
 #include "SDL.h"
 #include "SDL_image.h"
+#include "someVideoParms.h"
 
 #define  _SOMEVIDEOTHREAD_CPP_
 #include "someVideoThread.h"
@@ -33,8 +34,8 @@ VideoThread::VideoThread()
 
    mWindowW = 640;
    mWindowH = 480;
-   mWindowW = 1920;
-   mWindowH = 1080;
+   mWindowW = gVideoParms.mWindowWidth;
+   mWindowH = gVideoParms.mWindowHeight;
    mRectH = 200;
    mRectW = 200;
 
