@@ -62,7 +62,8 @@ public:
    int mRectH;
 
    // Thread window specific event types.
-   unsigned int mDrawEventType;
+   unsigned int mDraw1EventType;
+   unsigned int mDraw2EventType;
 
    //***************************************************************************
    //***************************************************************************
@@ -115,9 +116,11 @@ public:
 
    // Post an event to draw something.
    void postDraw1(int aCode);
+   void postDraw2(int aCode);
 
    // Draw something. This is requested by the posted event.
    void doVideoDraw1(SDL_Event* aEvent);
+   void doVideoDraw2(SDL_Event* aEvent);
 
    //***************************************************************************
    //***************************************************************************

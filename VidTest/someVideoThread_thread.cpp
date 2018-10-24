@@ -49,7 +49,8 @@ VideoThread::VideoThread()
    mRectB.w = mRectW;
    mRectB.h = mRectH;
 
-   mDrawEventType = 0;
+   mDraw1EventType = 0;
+   mDraw2EventType = 0;
 }
 
 VideoThread::~VideoThread()
@@ -101,7 +102,8 @@ void VideoThread::threadInitFunction()
    mValidFlag = true;
 
    // Initialize event types.
-   mDrawEventType = SDL_RegisterEvents(1);
+   mDraw1EventType = SDL_RegisterEvents(1);
+   mDraw2EventType = SDL_RegisterEvents(1);
 
    // Create the window and renderer.
    doVideoStart();
@@ -133,9 +135,13 @@ void VideoThread::threadRunFunction()
       if (tEvent.type == SDL_MOUSEBUTTONDOWN) break;
 
       // Draw something if a draw event was posted.
-      if (tEvent.type == mDrawEventType)
+      if (tEvent.type == mDraw1EventType)
       {
          doVideoDraw1(&tEvent);
+      }
+      if (tEvent.type == mDraw2EventType)
+      {
+         doVideoDraw2(&tEvent);
       }
    }
 
@@ -185,17 +191,27 @@ void VideoThread::shutdownThread()
 
 void VideoThread::postDraw1(int aCode)
 {
-   // Guard.
-   if (mDrawEventType < 1)
-   {
-      Prn::print(Prn::ThreadInit1, "ERROR event type not initialized");
-      return;
-   }
-
    // Post the event.
    SDL_Event tEvent;
    SDL_memset(&tEvent, 0, sizeof(tEvent));
-   tEvent.type = mDrawEventType;
+   tEvent.type = mDraw1EventType;
+   tEvent.user.code = aCode;
+   tEvent.user.data1 = 0;
+   tEvent.user.data2 = 0;
+   SDL_PushEvent(&tEvent);
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+// Post an event to draw something.
+
+void VideoThread::postDraw2(int aCode)
+{
+   // Post the event.
+   SDL_Event tEvent;
+   SDL_memset(&tEvent, 0, sizeof(tEvent));
+   tEvent.type = mDraw2EventType;
    tEvent.user.code = aCode;
    tEvent.user.data1 = 0;
    tEvent.user.data2 = 0;

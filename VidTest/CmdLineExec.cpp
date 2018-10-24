@@ -32,7 +32,8 @@ void CmdLineExec::reset()
 
 void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 {
-   if (aCmd->isCmd("D"))         executeDraw(aCmd);
+   if (aCmd->isCmd("D1"))        executeDraw1(aCmd);
+   if (aCmd->isCmd("D2"))        executeDraw2(aCmd);
 
    if (aCmd->isCmd("TP"))        Some::gTimerThread->mTPFlag = aCmd->argBool(1);
    if (aCmd->isCmd("GO1"))       executeGo1(aCmd);
@@ -53,11 +54,22 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 //******************************************************************************
 //******************************************************************************
 
-void CmdLineExec::executeDraw(Ris::CmdLineCmd* aCmd)
+void CmdLineExec::executeDraw1(Ris::CmdLineCmd* aCmd)
 {
    aCmd->setArgDefault(1, 0);
 
    Some::gVideoThread->postDraw1(aCmd->argInt(1));
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeDraw2(Ris::CmdLineCmd* aCmd)
+{
+   aCmd->setArgDefault(1, 0);
+
+   Some::gVideoThread->postDraw2(aCmd->argInt(1));
 }
 
 //******************************************************************************
