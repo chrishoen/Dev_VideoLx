@@ -166,14 +166,14 @@ int main(int argc,char** argv)
    tRet = SDL_Init(SDL_INIT_VIDEO);
    if (tRet) my_error("SDL_Init");
 
+   // if (tRet) my_img_error("IMG_Init");
+
    printf("\n");
    printf("IMG_Init*******************************************************\n");
    tRet = IMG_Init(IMG_INIT_PNG);
    printf("IMG_Init tRet         %d\n", tRet);
    printf("IMG_Init SDL_GetError %s\n", SDL_GetError());
    printf("IMG_Init IMG_GetError %s\n", IMG_GetError());
-
-   // if (tRet) my_img_error("IMG_Init");
 
    //***************************************************************************
    //***************************************************************************
