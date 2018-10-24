@@ -43,6 +43,10 @@ void VideoThread::doVideoStart()
       Prn::print(Prn::ThreadRun1, "VideoDisplays***************************************************");
       int tNumVideoDisplays = SDL_GetNumVideoDisplays();
       Prn::print(Prn::ThreadRun1, "NumVideoDisplays       %1d", tNumVideoDisplays);
+      for (int i = 0; i < tNumVideoDisplays; i++)
+      {
+         showDisplayInfo(i);
+      }
 
       Prn::print(Prn::ThreadRun1, "");
       Prn::print(Prn::ThreadRun1, "RendererDrivers************************************************");
@@ -53,6 +57,10 @@ void VideoThread::doVideoStart()
          SDL_GetRenderDriverInfo(i, &mRenderInfo);
          showRenderInfo("RenderDriver", &mRenderInfo);
       }
+
+      Prn::print(Prn::ThreadRun1, "");
+      Prn::print(Prn::ThreadRun1, "GL info*********************************************************");
+      showGLInfo();
 
       //***************************************************************************
       //***************************************************************************

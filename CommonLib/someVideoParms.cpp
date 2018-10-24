@@ -77,7 +77,7 @@ void VideoParms::show()
    printf("SideX                 %-4d\n", mSideX);
    printf("sideY                 %-4d\n", mSideY);
    printf("\n");
-   printf("TmerThreadPeriod      %-4d\n", mTimerThreadPeriod);
+   printf("TimerThreadPeriod     %-4d\n", mTimerThreadPeriod);
 }
 
 //******************************************************************************

@@ -60,7 +60,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-      <LibraryDependencies>pthread;SDL2;RisLib</LibraryDependencies>
+      <LibraryDependencies>pthread;SDL2;SDL2_image;RisLib</LibraryDependencies>
       <AdditionalOptions>
       </AdditionalOptions>
       <AdditionalLibraryDirectories>/usr/local/lib;/home/linaro/Alpha/Lib/RisLib/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>

@@ -3,6 +3,7 @@
 
 #include "someVideoThread.h"
 #include "someTimerThread.h"
+#include "someVideoParms.h"
 
 #include "risCmdLineConsole.h"
 #include "CmdLineExec.h"
@@ -40,6 +41,8 @@ void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("GO4"))       executeGo4(aCmd);
    if (aCmd->isCmd("GO5"))       executeGo5(aCmd);
    if (aCmd->isCmd("GO5"))       executeGo5(aCmd);
+
+   if (aCmd->isCmd("Parms"))     executeParms(aCmd);
 }
 
 //******************************************************************************
@@ -110,5 +113,16 @@ void CmdLineExec::executeGo4(Ris::CmdLineCmd* aCmd)
 
 void CmdLineExec::executeGo5(Ris::CmdLineCmd* aCmd)
 {
+}
+
+//******************************************************************************
+//******************************************************************************
+//******************************************************************************
+
+void CmdLineExec::executeParms(Ris::CmdLineCmd* aCmd)
+{
+   Some::gVideoParms.reset();
+   Some::gVideoParms.readSection("default");
+   Some::gVideoParms.show();
 }
 

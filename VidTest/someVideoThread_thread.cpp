@@ -7,6 +7,7 @@
 #include "stdafx.h"
 
 #include "SDL.h"
+#include "SDL_image.h"
 
 #define  _SOMEVIDEOTHREAD_CPP_
 #include "someVideoThread.h"
@@ -76,6 +77,7 @@ void VideoThread::threadInitFunction()
    Prn::print(Prn::ThreadInit1, "VideoThread::threadInitFunction");
 
    // Initialize the video subsystem.
+   Prn::print(Prn::ThreadInit1, "SDL_Init");
    tRet = SDL_Init(SDL_INIT_VIDEO);
    if (tRet)
    {
@@ -83,6 +85,18 @@ void VideoThread::threadInitFunction()
       mValidFlag = false;
       return;
    }
+
+   Prn::print(Prn::ThreadInit1, "IMG_Init");
+   tRet = IMG_Init(IMG_INIT_PNG);
+   if (tRet != IMG_INIT_PNG)
+   {
+      Prn::print(Prn::ThreadInit1, "ERROR IMG_Init");
+      Prn::print(Prn::ThreadInit1, "IMG_Init SDL_GetError  %s\n", SDL_GetError());
+      Prn::print(Prn::ThreadInit1, "IMG_GetError  %s\n", IMG_GetError());
+      mValidFlag = false;
+      return;
+   }
+
    mValidFlag = true;
 
    // Initialize event types.
