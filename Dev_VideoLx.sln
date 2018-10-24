@@ -17,6 +17,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Video2", "Video2\Video2.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VidTest", "VidTest\VidTest.vcxproj", "{E3D47A06-8C8B-43C6-B70A-3C95D765A371}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{B1F8E3EF-4180-483F-A2B2-710BA4DB8A23}"
+	ProjectSection(SolutionItems) = preProject
+		Files\Video_Parms.txt = Files\Video_Parms.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM

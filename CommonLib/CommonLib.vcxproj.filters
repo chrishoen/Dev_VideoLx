@@ -2,10 +2,10 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="someVideoSettings.cpp" />
+    <ClCompile Include="someVideoParms.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="someVideoSettings.h" />
+    <ClInclude Include="someVideoParms.h" />
   </ItemGroup>
 </Project>

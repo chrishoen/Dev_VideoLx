@@ -50,7 +50,7 @@ void my_show_window_flags(SDL_Window* aWindow)
    if (tFlags & SDL_WINDOW_FULLSCREEN) strcat(tString, "fullscreen ");
    if (tFlags & SDL_WINDOW_OPENGL)     strcat(tString, "opengl ");
 
-   printf("WindowFlags %8X  %s\n", tFlags,tString);
+   printf("WindowFlags     %8X  %s\n", tFlags,tString);
 }
 
 void my_show_render_info(const char* aLabel, SDL_RendererInfo* aInfo)
@@ -71,7 +71,7 @@ void my_show_display_info(int tDisplayIndex)
    int tRet = SDL_GetCurrentDisplayMode(tDisplayIndex, &tDisplayMode);
    if (tRet) my_error("SDL_GetCurrentDisplayMode");
 
-   printf("Display                %5d %5d %5d\n",
+   printf("Display                %4d %4d %4d\n",
       tDisplayMode.w, tDisplayMode.h, tDisplayMode.refresh_rate);
 }
 
@@ -81,14 +81,14 @@ void my_show_gl_info()
    int tValue;
    char tString[100] = "";
 
-   tRet = SDL_GL_GetAttribute(SDL_GL_DOUBLEBUFFER, &tValue);
-   if (tRet)
+   tRet = SDL_GL_GetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, &tValue);
+   if (tRet==0)
    {
       printf("GL PRESENT\n");
    }
    else
    {
-      printf("GL NOT PRESENT\n");
+      printf("GL NOT PRESENT %s\n",SDL_GetError());
       return;
    }
 
@@ -116,9 +116,9 @@ void my_show_gl_info()
 
 int main(int argc,char** argv)
 {
-   printf("VIDEO1*********************************************************\n");
-   printf("VIDEO1*********************************************************\n");
-   printf("VIDEO1*********************************************************\n");
+   printf("VIDEO2*********************************************************\n");
+   printf("VIDEO2*********************************************************\n");
+   printf("VIDEO2*********************************************************\n");
 
    //***************************************************************************
    //***************************************************************************
@@ -171,9 +171,9 @@ int main(int argc,char** argv)
    printf("\n");
    printf("IMG_Init*******************************************************\n");
    tRet = IMG_Init(IMG_INIT_PNG);
-   printf("IMG_Init tRet         %d\n", tRet);
-   printf("IMG_Init SDL_GetError %s\n", SDL_GetError());
-   printf("IMG_Init IMG_GetError %s\n", IMG_GetError());
+   printf("IMG_Init tRet          %d\n", tRet);
+   printf("IMG_Init SDL_GetError  %s\n", SDL_GetError());
+   printf("IMG_Init IMG_GetError  %s\n", IMG_GetError());
 
    //***************************************************************************
    //***************************************************************************
@@ -199,6 +199,7 @@ int main(int argc,char** argv)
       my_show_display_info(i);
    }
 
+   printf("\n");
    printf("GL info*********************************************************\n");
    my_show_gl_info();
 

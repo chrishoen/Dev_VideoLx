@@ -46,7 +46,7 @@ namespace Some
 // structure. If so, then this class is the root.
 // 
 
-class VideoSettings : public Ris::BaseCmdLineParms
+class VideoParms : public Ris::BaseCmdLineParms
 {
 public:
 
@@ -67,8 +67,34 @@ public:
    //***************************************************************************
    // Members.
 
-   // Timer thread.
-   int  mTimerThreadPeriod;
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Members.
+
+   // Size of the window.
+   int mWindowWidth;
+   int mWindowHeight;
+
+   // Window colors.
+   int mForeColor[4];
+   int mBackColor[4];
+
+   //***************************************************************************
+   //***************************************************************************
+   //***************************************************************************
+   // Members.
+
+   // Image file name.
+   char mImageFilename[cMaxStringSize];
+
+   // Side variables.
+   int mSideX;
+   int mSideY;
+
+   // Timer thread period.
+   int mTimerThreadPeriod;
 
    //***************************************************************************
    //***************************************************************************
@@ -82,7 +108,7 @@ public:
 
    // Constructor,
    typedef Ris::BaseCmdLineParms BaseClass;
-   VideoSettings();
+   VideoParms();
    void reset();
    void show();
 
@@ -101,10 +127,10 @@ public:
 //******************************************************************************
 // Global instance.
 
-#ifdef _SOMEVIDEOSETTINGS_CPP_
-   VideoSettings gVideoSettings;
+#ifdef _SOMEVIDEOPARMS_CPP_
+   VideoParms gVideoParms;
 #else
-   extern VideoSettings gVideoSettings;
+   extern VideoParms gVideoParms;
 #endif
 
 //******************************************************************************

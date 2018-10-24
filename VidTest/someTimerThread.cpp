@@ -9,7 +9,7 @@ Description:
 #include "stdafx.h"
 
 #include "someVideoThread.h"
-#include "someVideoSettings.h"
+#include "someVideoParms.h"
 
 #define  _SOMETIMERTHREAD1_CPP_
 #include "someTimerThread.h"
@@ -32,7 +32,7 @@ TimerThread::TimerThread()
    BaseClass::setThreadPriorityHigh();
 
    // Set timer period
-   BaseClass::mTimerPeriod = gVideoSettings.mTimerThreadPeriod;
+   BaseClass::mTimerPeriod = gVideoParms.mTimerThreadPeriod;
 
    // Initialize members.
    mTPFlag = false;
