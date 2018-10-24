@@ -253,7 +253,6 @@ void VideoThread::doVideoDraw2(SDL_Event* aEvent)
       SDL_QueryTexture(mTexture, NULL, NULL, &tWidth, &tHeight);
       Prn::print(Prn::ThreadRun1, "LoadTexture %4d %4d", tWidth,tHeight);
 
-
       // Render the texture.
       SDL_RenderCopy(mRenderer, mTexture, NULL, NULL);
       SDL_RenderPresent(mRenderer);
@@ -263,8 +262,6 @@ void VideoThread::doVideoDraw2(SDL_Event* aEvent)
       Prn::print(Prn::ThreadRun1, "EXCEPTION %s", aString, SDL_GetError());
       mValidFlag = false;
    }
-
-
 }
 
 //******************************************************************************
