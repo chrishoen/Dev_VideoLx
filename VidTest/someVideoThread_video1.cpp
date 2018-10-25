@@ -151,10 +151,13 @@ void VideoThread::doVideoStart()
 
       Prn::print(Prn::ThreadRun1, "DrawWindow*****************************************************");
 
-      // Set renderer to blue.
+      // Disable the mouse.
+      SDL_ShowCursor(SDL_DISABLE);
+
+      // Set renderer to the background color.
       SDL_SetRenderDrawColor(mRenderer, mBackColor[0], mBackColor[1], mBackColor[2], mBackColor[3]);
 
-      // Clear the window and make it all blue.
+      // Clear the window and make it all background color.
       SDL_RenderClear(mRenderer);
 
       // Render the changes above.
