@@ -59,7 +59,6 @@ void VideoThread::showRendererInfo(SDL_Renderer* aRenderer)
    if (tInfo.flags & SDL_RENDERER_TARGETTEXTURE) strcat(tString, "targettexture ");
 
    Prn::print(Prn::ThreadRun1, "Renderer Info  %-10s %5X %s", tInfo.name, tInfo.flags, tString);
-   Prn::print(Prn::ThreadRun1, "Renderer MaxSize  %4d %4d", tInfo.max_texture_width, tInfo.max_texture_height);
    Prn::print(Prn::ThreadRun1, "Renderer OutSize  %4d %4d", tWidth,tHeight);
 }
 

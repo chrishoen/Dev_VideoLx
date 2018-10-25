@@ -25,10 +25,10 @@ VideoThread::VideoThread()
    // Set member variables.
    mValidFlag = false;
 
-   mDisplay = 0;
+   mDisplay = gVideoParms.mDisplay;
    mWindow = 0;
    mSurface = 0;
-   mImage;
+   mImage = 0;
    mRenderer = 0;
    mBackground = 0;
    mTexture = 0;

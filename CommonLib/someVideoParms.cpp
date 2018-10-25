@@ -34,6 +34,8 @@ void VideoParms::reset()
    BaseClass::reset();
    strcpy(BaseClass::mDefaultFileName, "Video_Parms.txt");
 
+   mDisplay = 0;
+
    mWindowWidth = 0;
    mWindowHeight = 0;
 
@@ -65,6 +67,9 @@ void VideoParms::show()
    printf("VideoParms************************************************ %s\n", mTargetSection);
 
    printf("\n");
+   printf("Display               %-4d\n", mDisplay);
+
+   printf("\n");
    printf("WindowWidthHeight     %-4d %4d\n", mWindowWidth, mWindowHeight);
 
    printf("\n");
@@ -72,8 +77,8 @@ void VideoParms::show()
    printf("BackColor             %-4d %4d %4d %4d\n", mBackColor[0], mBackColor[1], mBackColor[2], mBackColor[3]);
 
    printf("\n");
-   printf("ImageFilename0         %-10s\n", mImageFilename0);
-   printf("ImageFilename1         %-10s\n", mImageFilename1);
+   printf("ImageFilename0        %-10s\n", mImageFilename0);
+   printf("ImageFilename1        %-10s\n", mImageFilename1);
 
    printf("\n");
    printf("SideX                 %-4d\n", mSideX);
@@ -92,6 +97,8 @@ void VideoParms::show()
 void VideoParms::execute(Ris::CmdLineCmd* aCmd)
 {
    if (!isTargetSection(aCmd)) return;
+
+   if (aCmd->isCmd("Display")) mDisplay = aCmd->argInt(1);
 
    if (aCmd->isCmd("WindowWidthHeight"))
    {

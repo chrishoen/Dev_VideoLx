@@ -40,8 +40,9 @@ void main_initialize(int argc,char** argv)
    Some::gVideoParms.readSection("default");
 
    // Done.
-   Prn::print(0,"VThread Program**********************************************BEGIN");
-
+   Prn::print(0, "VThread Program**********************************************BEGIN");
+   Prn::print(0, "VThread Program**********************************************BEGIN");
+   Prn::print(0, "VThread Program**********************************************BEGIN");
 }
 
 //******************************************************************************
@@ -51,7 +52,7 @@ void main_initialize(int argc,char** argv)
 
 void main_finalize()
 {
-   Prn::print(0,"VThread Program**********************************************END");
+   Prn::print(0, "VThread Program**********************************************END");
 
    // Close print facility.
    Prn::finalizePrint();

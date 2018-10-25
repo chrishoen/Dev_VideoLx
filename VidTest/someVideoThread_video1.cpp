@@ -83,6 +83,27 @@ void VideoThread::doVideoStart()
       //************************************************************************
       //************************************************************************
       //************************************************************************
+      // Calculate variables.
+
+      int tRet = SDL_GetCurrentDisplayMode(mDisplay, &mDisplayMode);
+      mWindowW = mDisplayMode.w;
+      mWindowH = mDisplayMode.h;
+      mRectW = mDisplayMode.w/8;
+      mRectH = mDisplayMode.w/8;
+
+      mRectA.x = mWindowW/4 - mRectW/2;
+      mRectA.y = mWindowH/2 - mRectH/2;
+      mRectA.w = mRectW;
+      mRectA.h = mRectH;
+
+      mRectB.x = (3*mWindowW)/4 - mRectW/2;
+      mRectB.y = mWindowH/2 - mRectH/2;
+      mRectB.w = mRectW;
+      mRectB.h = mRectH;
+
+      //************************************************************************
+      //************************************************************************
+      //************************************************************************
       // Create window.
 
       Prn::print(Prn::ThreadRun1, "");
@@ -92,7 +113,6 @@ void VideoThread::doVideoStart()
       tWindowFlags |= SDL_WINDOW_FULLSCREEN;
       tWindowFlags |= SDL_WINDOW_OPENGL;
 
-      mDisplay = 1;
       mWindow = SDL_CreateWindow("VideoThread",
          SDL_WINDOWPOS_CENTERED_DISPLAY(mDisplay), SDL_WINDOWPOS_CENTERED_DISPLAY(mDisplay),
          mWindowW, mWindowH, tWindowFlags);

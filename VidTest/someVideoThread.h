@@ -46,6 +46,7 @@ public:
 
    // SDL window resources.
    int              mDisplay;
+   SDL_DisplayMode  mDisplayMode;
    SDL_Window*      mWindow;
    SDL_Surface*     mSurface;
    SDL_Surface*     mImage;
