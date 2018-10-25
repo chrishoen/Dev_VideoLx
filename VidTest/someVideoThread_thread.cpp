@@ -30,8 +30,6 @@ VideoThread::VideoThread()
    mSurface = 0;
    mImage = 0;
    mRenderer = 0;
-   mBackground = 0;
-   mTexture = 0;
 
    mWindowW = gVideoParms.mWindowWidth;
    mWindowH = gVideoParms.mWindowHeight;
@@ -60,6 +58,8 @@ VideoThread::VideoThread()
 
    mDraw1EventType = 0;
    mDraw2EventType = 0;
+   mStartTime = 0.0;
+   mStopTime = 0.0;
 }
 
 VideoThread::~VideoThread()
@@ -200,6 +200,7 @@ void VideoThread::shutdownThread()
 
 void VideoThread::postDraw1(int aCode)
 {
+
    // Post the event.
    SDL_Event tEvent;
    SDL_memset(&tEvent, 0, sizeof(tEvent));

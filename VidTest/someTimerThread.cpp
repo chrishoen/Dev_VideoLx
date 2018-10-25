@@ -35,7 +35,7 @@ TimerThread::TimerThread()
    BaseClass::mTimerPeriod = gVideoParms.mTimerThreadPeriod;
 
    // Initialize members.
-   mTPFlag = false;
+   mTPCode = false;
 }
 
 //******************************************************************************
@@ -48,11 +48,18 @@ void TimerThread::executeOnTimer(int aTimeCount)
    Prn::print(Prn::ViewRun1, "TimerThread Timer %4d",aTimeCount);
 
    // Guard.
-   if (!mTPFlag) return;
+   if (!mTPCode) return;
    if (!gVideoThread) return;
 
    // Post a draw event to the video thread.
-   gVideoThread->postDraw1(aTimeCount % 2);
+   if (mTPCode == 1)
+   {
+      gVideoThread->postDraw1(aTimeCount % 2);
+   }
+   else if (mTPCode == 2)
+   {
+      gVideoThread->postDraw2(aTimeCount % 2);
+   }
 }
 
 //******************************************************************************

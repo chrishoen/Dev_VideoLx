@@ -51,8 +51,6 @@ public:
    SDL_Surface*     mSurface;
    SDL_Surface*     mImage;
    SDL_Renderer*    mRenderer;
-   SDL_Texture*     mBackground;
-   SDL_Texture*     mTexture;
    SDL_RendererInfo mRenderInfo;
    SDL_Rect         mRectA;
    SDL_Rect         mRectB;
@@ -70,6 +68,11 @@ public:
    // Thread window specific event types.
    unsigned int mDraw1EventType;
    unsigned int mDraw2EventType;
+
+   // Metrics.
+   double mStartTime;
+   double mStopTime;
+
 
    //***************************************************************************
    //***************************************************************************

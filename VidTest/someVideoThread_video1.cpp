@@ -9,6 +9,8 @@
 
 #include "SDL.h"
 #include "SDL_image.h"
+
+#include "risProgramTime.h"
 #include "risAlphaDir.h"
 
 #include "someVideoParms.h"
@@ -174,10 +176,8 @@ void VideoThread::doVideoFinish()
 {
    Prn::print(Prn::ThreadRun1, "VideoThread::doVideoFinish");
 
-   if (mTexture)   SDL_DestroyTexture(mTexture);
    if (mRenderer) SDL_DestroyRenderer(mRenderer);
    if (mWindow)   SDL_DestroyWindow(mWindow);
-   mTexture = 0;
    mRenderer = 0;
    mWindow = 0;
 }
@@ -193,6 +193,7 @@ void VideoThread::doVideoDraw1(SDL_Event* aEvent)
    int aCode = aEvent->user.code;
    Prn::print(Prn::ThreadRun2, "VideoThread::doVideoDraw1 %d", aCode);
 
+   mStartTime = Ris::getCurrentProgramTime();
    try
    {
       //************************************************************************
@@ -226,6 +227,14 @@ void VideoThread::doVideoDraw1(SDL_Event* aEvent)
       Prn::print(Prn::ThreadRun1, "EXCEPTION %s", aString, SDL_GetError());
       mValidFlag = false;
    }
+
+   // Metrics.
+   mStopTime = Ris::getCurrentProgramTime();
+   // Print the draw latency.
+   if (gVideoParms.mShowCode != 0)
+   {
+      Prn::print(Prn::ThreadRun1, "Latency %6.3f", mStopTime - mStartTime);
+   }
 }
 
 //******************************************************************************
@@ -235,6 +244,9 @@ void VideoThread::doVideoDraw1(SDL_Event* aEvent)
 
 void VideoThread::doVideoDraw2(SDL_Event* aEvent)
 {
+   // Metrics.
+   mStartTime = Ris::getCurrentProgramTime();
+
    int tRet = 0;
    int tCode = aEvent->user.code;
 
@@ -262,21 +274,32 @@ void VideoThread::doVideoDraw2(SDL_Event* aEvent)
    try
    {
       // Load the texture from the png file.
-      mTexture = IMG_LoadTexture(mRenderer, tFilename);
-      if (!mTexture) throw "IMG_LoadTexture";
+      SDL_Texture* tTexture = IMG_LoadTexture(mRenderer, tFilename);
+      if (!tTexture) throw "IMG_LoadTexture";
 
       int tWidth, tHeight;
-      SDL_QueryTexture(mTexture, NULL, NULL, &tWidth, &tHeight);
+      SDL_QueryTexture(tTexture, NULL, NULL, &tWidth, &tHeight);
       Prn::print(Prn::ThreadRun1, "LoadTexture %4d %4d", tWidth,tHeight);
 
       // Render the texture.
-      SDL_RenderCopy(mRenderer, mTexture, NULL, NULL);
+      SDL_RenderCopy(mRenderer, tTexture, NULL, NULL);
+      SDL_DestroyTexture(tTexture);
+
+      // Display the renderer changes.
       SDL_RenderPresent(mRenderer);
    }
    catch (const char* aString)
    {
       Prn::print(Prn::ThreadRun1, "EXCEPTION %s", aString, SDL_GetError());
       mValidFlag = false;
+   }
+
+   // Metrics.
+   mStopTime = Ris::getCurrentProgramTime();
+   // Print the draw latency.
+   if (gVideoParms.mShowCode != 0)
+   {
+      Prn::print(Prn::ThreadRun1, "Latency %6.3f", mStopTime - mStartTime);
    }
 }
 

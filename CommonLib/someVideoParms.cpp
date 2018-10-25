@@ -54,6 +54,7 @@ void VideoParms::reset()
    mSideX = 0;
    mSideY = 0;
    mTimerThreadPeriod = 0;
+   mShowCode = 0;
 }
 
 //******************************************************************************
@@ -85,6 +86,7 @@ void VideoParms::show()
    printf("sideY                 %-4d\n", mSideY);
    printf("\n");
    printf("TimerThreadPeriod     %-4d\n", mTimerThreadPeriod);
+   printf("ShowCode              %-4d\n", mShowCode);
 }
 
 //******************************************************************************
@@ -129,6 +131,7 @@ void VideoParms::execute(Ris::CmdLineCmd* aCmd)
    if (aCmd->isCmd("SideY"))        mSideY = aCmd->argInt(1);
 
    if (aCmd->isCmd("TimerThreadPeriod"))  mTimerThreadPeriod = aCmd->argInt(1);
+   if (aCmd->isCmd("ShowCode"))           mShowCode = aCmd->argInt(1);
 }
 
 //******************************************************************************

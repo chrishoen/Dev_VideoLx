@@ -32,10 +32,12 @@ void CmdLineExec::reset()
 
 void CmdLineExec::execute(Ris::CmdLineCmd* aCmd)
 {
+   if (aCmd->isCmd("Draw1"))     executeDraw1(aCmd);
+   if (aCmd->isCmd("Draw2"))     executeDraw2(aCmd);
    if (aCmd->isCmd("D1"))        executeDraw1(aCmd);
    if (aCmd->isCmd("D2"))        executeDraw2(aCmd);
 
-   if (aCmd->isCmd("TP"))        Some::gTimerThread->mTPFlag = aCmd->argBool(1);
+   if (aCmd->isCmd("TP"))        Some::gTimerThread->mTPCode = aCmd->argInt(1);
    if (aCmd->isCmd("GO1"))       executeGo1(aCmd);
    if (aCmd->isCmd("GO2"))       executeGo2(aCmd);
    if (aCmd->isCmd("GO3"))       executeGo3(aCmd);
