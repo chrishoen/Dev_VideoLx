@@ -8,3 +8,4 @@ find_package(SDL2 CONFIG REQUIRED)
 target_include_directories(VTest PUBLIC ${SDL2_INCLUDE_DIRS})
 target_link_libraries(VTest ${SDL2_LIBRARIES})
 
+install(TARGETS VTest DESTINATION "bin")
