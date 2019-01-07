@@ -243,9 +243,9 @@ int main(int argc,char** argv)
    tSurface = SDL_GetWindowSurface(tWindow);
    if (tSurface == 0) my_error("SDL_GetWindowSurface");
 
-// tImage = SDL_LoadBMP("/home/linaro/Alpha/Image/Image1.bmp");
+// tImage = SDL_LoadBMP("/opt/alpha/image/Image1.bmp");
 // if (tImage == 0) my_error("SDL_LoadBMP");
-   tImage = IMG_Load("/home/linaro/Alpha/Image/Image1920.png");
+   tImage = IMG_Load("/opt/alpha/image/Image1920_0.png");
    if (tImage == 0) my_error("IMG_Load");
 
    tRet = SDL_BlitSurface(tImage, NULL, tSurface, NULL);

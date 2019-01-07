@@ -259,7 +259,7 @@ int main(int argc,char** argv)
       tSurface = SDL_GetWindowSurface(tWindow);
       if (tSurface == 0) my_error("SDL_GetWindowSurface");
 
-      tImage = SDL_LoadBMP("/home/linaro/Alpha/Image/sails.bmp");
+      tImage = SDL_LoadBMP("/opt/alpha/image/sails.bmp");
       if (tImage == 0) my_error("SDL_LoadBMP");
 
       tRet = SDL_BlitSurface(tImage, NULL, tSurface, NULL);

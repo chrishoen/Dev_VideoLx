@@ -115,7 +115,7 @@ int main(int argc,char** argv)
    // Local variables.
 
    int tRet;
-   int tRunCode = 1;
+   int tRunCode = 2;
    SDL_Window*      tWindow = 0;
    SDL_Surface*     tSurface = 0;
    SDL_Surface*     tImage;
@@ -269,7 +269,7 @@ int main(int argc,char** argv)
       if (tSurface == 0) my_error("SDL_GetWindowSurface");
 
 //    tImage = SDL_LoadBMP("C:/Alpha/Image/sails.bmp");
-      tImage = SDL_LoadBMP("/home/linaro/Alpha/Image/sails.bmp");
+      tImage = SDL_LoadBMP("/opt/alpha/image/sails.bmp");
       if (tImage == 0) my_error("SDL_LoadBMP");
 
       tRet = SDL_BlitSurface(tImage, NULL, tSurface, NULL);

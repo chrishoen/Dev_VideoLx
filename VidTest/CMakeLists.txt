@@ -1,10 +1,10 @@
 ﻿cmake_minimum_required (VERSION 3.8)
 
-project (VideoTest CXX)
+project (VidTest CXX)
 file(GLOB SRC_FILES ${PROJECT_SOURCE_DIR}/*.cpp)
-add_executable (VideoTest ${SRC_FILES})
+add_executable (VidTest ${SRC_FILES})
 
-target_include_directories(VideoTest PRIVATE CommonLib)
-target_link_libraries(VideoTest CommonLib)
+target_include_directories(VidTest PRIVATE CommonLib)
+target_link_libraries(VidTest CommonLib)
 
-install(TARGETS VideoTest DESTINATION bin)
+install(TARGETS VidTest DESTINATION "bin")

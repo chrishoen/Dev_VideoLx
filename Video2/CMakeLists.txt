@@ -8,4 +8,4 @@ find_package(SDL2 CONFIG REQUIRED)
 target_include_directories(Video2 PUBLIC ${SDL2_INCLUDE_DIRS})
 target_link_libraries(Video2 ${SDL2_LIBRARIES})
 
-install(TARGETS Video2 DESTINATION bin)
+install(TARGETS Video2 DESTINATION "bin")

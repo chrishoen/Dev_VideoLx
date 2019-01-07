@@ -7,4 +7,4 @@ add_executable (VThread1 ${SRC_FILES})
 target_include_directories(VThread1 PRIVATE CommonLib)
 target_link_libraries(VThread1 CommonLib)
 
-install(TARGETS VThread1 DESTINATION bin)
+install(TARGETS VThread1 DESTINATION "bin")

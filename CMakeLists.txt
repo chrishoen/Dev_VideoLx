@@ -3,7 +3,6 @@
 project ("Dev_VideoLx")
 
 set(CMAKE_INSTALL_PREFIX "/var/tmp/install")
-set(CMAKE_INSTALL_PREFIX "/opt/cprint")
 
 set(CMAKE_CXX_FLAGS "")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
