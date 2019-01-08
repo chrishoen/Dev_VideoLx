@@ -112,7 +112,8 @@ void VideoThread::doVideoStart()
       Prn::print(Prn::ThreadRun1, "CreateWindow***************************************************");
       unsigned int tWindowFlags = 0;
       tWindowFlags |= SDL_WINDOW_SHOWN;
-      tWindowFlags |= SDL_WINDOW_FULLSCREEN;
+      tWindowFlags |= SDL_WINDOW_BORDERLESS;
+      tWindowFlags |= SDL_WINDOW_MAXIMIZED;
       tWindowFlags |= SDL_WINDOW_OPENGL;
 
       mWindow = SDL_CreateWindow("VideoThread",

@@ -119,6 +119,7 @@ int main(int argc,char** argv)
    SDL_RendererInfo tRenderInfo;
    SDL_Rect         tRectA;
 
+   int tDisplay = 0;
    int tWindowW = 640;
    int tWindowH = 480;
    int tRectW = 200;
@@ -186,11 +187,13 @@ int main(int argc,char** argv)
    printf("CreateWindow***************************************************\n");
    unsigned int tWindowFlags = 0;
    tWindowFlags |= SDL_WINDOW_SHOWN;
-   tWindowFlags |= SDL_WINDOW_FULLSCREEN;
+   tWindowFlags |= SDL_WINDOW_BORDERLESS;
+   tWindowFlags |= SDL_WINDOW_MAXIMIZED;
    tWindowFlags |= SDL_WINDOW_OPENGL;
 
    tWindow = SDL_CreateWindow("TVideo",
-      SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+      SDL_WINDOWPOS_CENTERED_DISPLAY(tDisplay), SDL_WINDOWPOS_CENTERED_DISPLAY(tDisplay),
+//    SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
       tWindowW, tWindowH,tWindowFlags);
    if(tWindow == 0) my_error("SDL_CreateWindow");
 
