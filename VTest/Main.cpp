@@ -127,7 +127,9 @@ int main(int argc,char** argv)
 
    tWindowW = 1920;
    tWindowH = 1080;
-   
+   tWindowW = 1440;
+   tWindowH = 2560;
+
    tRectA.x = tWindowW / 2 - tRectW / 2;
    tRectA.y = tWindowH / 2 - tRectH / 2;
    tRectA.w = tRectW;
